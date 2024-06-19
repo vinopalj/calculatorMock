@@ -10,6 +10,10 @@
     <script src="/calculator.sdk.js"></script>
     <script>
     //dto schema for request 
+    myCallBack = (response) => {
+        console.log('response IN callback', response);
+    }
+
     const data = {
         callback: myCallBack,
         target: "/api/calculator",
@@ -21,9 +25,6 @@
             period: 12, // delka splácení
             downPaymentAmount: 0 //akontace
         }
-    }
-    myCallBack = (response) => {
-        console.log('response IN callback', response);
     }
 
     renderCalculator(data, myCallBack);
