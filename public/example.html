@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator SDK Example</title>
+</head>
+<body>
+    <h1>Calculator SDK Example</h1>
+    <div id="calculator"></div>
+
+    <script src="/calculator.sdk.js"></script>
+    <script>
+    //dto schema for request 
+    const data = {
+        callback: myCallBack,
+        target: "/api/calculator",
+        containerSelector: "#calculator",
+        type: "detail", // detail produktu (nemá tlačítka - vybrat splátky) | cart
+        products: ["inbankXY12", "inBankYQ87", "homecreditXY12", "homecreditXY7"], /// jaké produkty od různých poskytovatelů chceme v kalkulačce zobrazit
+        amount: 59000, //částka půjčky
+        selectedProduct: {
+            period: 12, // delka splácení
+            downPaymentAmount: 0 //akontace
+        }
+    }
+    myCallBack = (response) => {
+        console.log('response IN callback', response);
+    }
+
+    renderCalculator(data, myCallBack);
+    </script>
+</body>
+</html>

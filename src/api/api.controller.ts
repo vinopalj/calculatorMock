@@ -1,13 +1,15 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 
 @Controller('api')
 export class ApiController {
 
 
-    @Get('/calculator')
-    getCalculator(): string {
+data
+    @Post('/calculator')
+    getCalculator( @Body() data): { html: string } {
 
-        return `
+        const calculatorDefaultHtml = `
+
         <div class="calculator">
     <h2>Splátková kalkulačka</h2>
 
@@ -39,6 +41,9 @@ export class ApiController {
         <label for="upfront">Kolik zaplatíte předem:</label>
         <input type="number" id="upfront" name="upfront" value="0"> Kč
     </div>
+    <div class="select">
+    <button type="button" class="calculator-button" id="calculate">Vybrat</button>
+    </div>
 
     <div class="details">
         <div>Výše úvěru: <span id="loanAmount">3 090 Kč</span></div>
@@ -50,9 +55,13 @@ export class ApiController {
     <div class="note">
         Kalkulačka je orientační. Způsob platby na splátky si můžete nastavit v košíku.
     </div>
-
 </div>
-`
+`   
+        const response = {
+            html: calculatorDefaultHtml
+        }
+
+        return response
 
     }
 
