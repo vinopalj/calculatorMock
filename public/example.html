@@ -1,33 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Calculator SDK Example</title>
+    <title>Triangl Calculator SDK Example</title>
 </head>
 <body>
-    <h1>Calculator SDK Example</h1>
-    <div id="calculator"></div>
+    <h1>Triangl Calculator SDK Example</h1>
 
-    <script src="/calculator.sdk.js"></script>
+    <script src="https://unpkg.com/calculator-frontend@0.2.0/build/static/js/main.865db340.js"></script>
+    <button id="showCalcButton">Show Calculator</button>
     <script>
-    //dto schema for request 
-    myCallBack = (response) => {
-        console.log('response IN callback', response);
-    }
-
-    const data = {
-        callback: myCallBack,
-        target: "/api/calculator",
-        containerSelector: "#calculator",
-        type: "detail", // detail produktu (nemá tlačítka - vybrat splátky) | cart
-        products: ["inbankXY12", "inBankYQ87", "homecreditXY12", "homecreditXY7"], /// jaké produkty od různých poskytovatelů chceme v kalkulačce zobrazit
-        amount: 59000, //částka půjčky
-        selectedProduct: {
-            period: 12, // delka splácení
-            downPaymentAmount: 0 //akontace
+        function processCalcResult (result) {
+            console.log('Result from callback:', result);
         }
-    }
+        function showTrianglCalc() {
+            // Check if 'triangl-calculator' is defined
+            if (typeof customElements.get('triangl-calculator') !== 'function') {
+                console.log('Failed to load the calculator SDK. Please check your internet connection and try again.');
+                return;
+            }
 
-    renderCalculator(data, myCallBack);
+            let calc = document.createElement('triangl-calculator');
+            calc.apiKey = 'api-key-here'
+            calc.callback = processCalcResult;
+            calc.type = 'detail'; // or 'cart'
+            calc.products = ["inBankXyz", "inBankAbc", "homecreditAbc"]; // pořadí splátkových produktů
+            calc.price = 800000;  //required format: 100000 => 1 000 Kč //stejně jako HC
+            document.body.appendChild(calc)
+        }
+        document.getElementById('showCalcButton').addEventListener('click', showTrianglCalc);
     </script>
+
 </body>
 </html>
